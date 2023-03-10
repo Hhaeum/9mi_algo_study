@@ -1,0 +1,9 @@
+n = int(input())
+
+x = cnt = 1
+
+while x < n:
+    cnt += 1
+    x += 6 * (cnt - 1)
+
+print(cnt)

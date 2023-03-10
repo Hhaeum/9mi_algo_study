@@ -1,0 +1,23 @@
+K = int(input())
+cha = [list(map(int, input().split())) for _ in range(6)]
+
+mx1 = mx3 = 0
+mi1 = mi3 = 0
+
+for i in range(6):
+    if cha[i][0] < 3:  # 1, 2
+        if cha[i][1] > mx1:
+            mx1 = cha[i][1]
+            mi1 = i
+
+    if cha[i][0] >= 3:  # 3, 4
+        if cha[i][1] > mx3:
+            mx3 = cha[i][1]
+            mi3 = i
+
+# % 6 : index error 방지 / -1 -> 5, 6 -> 0
+mn1 = abs(cha[(mi1 - 1) % 6][1] - cha[(mi1 + 1) % 6][1])
+mn3 = abs(cha[(mi3 - 1) % 6][1] - cha[(mi3 + 1) % 6][1])
+ans = ((mx1 * mx3) - (mn1 * mn3)) * K
+
+print(ans)
