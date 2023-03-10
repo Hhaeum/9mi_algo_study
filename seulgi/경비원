@@ -1,0 +1,53 @@
+n, m = map(int, input().split())
+N = int(input())
+
+store = []  # 상점 위치
+me = []     # 기준점 위치 (동근)
+
+for i in range(N):      # 상점 위치
+    di, loc = map(int, input().split())
+    if di == 1:
+        store += [0, loc]
+    elif di == 2:
+        store += [m, loc]
+    elif di == 3:
+        store += [loc, 0]
+    elif di == 4:
+        store += [loc, n]
+
+
+di, loc = map(int, input().split())     # 기준점 위치 (동근)
+if di == 1:
+    me += [0, loc]
+elif di == 2:
+    me += [m, loc]
+elif di == 3:
+    me += [loc, 0]
+elif di == 4:
+    me += [loc, n]
+
+cnt = 0
+
+for i in range(0, len(store), 2):
+    if abs(me[0]-store[i]) == m:    # 반대 방향
+        len1 = m + me[1] + store[i+1]
+        len2 = m + 2*n - (me[1] + store[i+1])
+
+        if len1 > len2:
+            cnt += len2
+        else:
+            cnt += len1
+
+    elif abs(me[1]-store[i+1]) == n:    # 양 옆 반대
+        len1 = n + me[0] + store[i]
+        len2 = n + 2*m - (me[0] + store[i])
+
+        if len1 > len2:
+            cnt += len2
+        else:
+            cnt += len1
+
+    else:       # 나머지 방향
+        cnt += (abs(me[0]-store[i]) + abs(me[1]-store[i+1]))
+
+print(cnt)
