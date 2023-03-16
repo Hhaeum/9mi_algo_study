@@ -1,0 +1,30 @@
+T = int(input())
+
+for tc in range(T):
+    data = input()
+
+    stack = []
+    t_stack = []
+
+    L = len(data)   # 문자열 길이
+
+    for i in range(L):
+        if data[i] == '<':
+            if stack:       # stack에 값이 있으면
+                t_stack.append(stack.pop())     # stack의 마지막 값을 빼서 t_stack에 추가
+
+        elif data[i] == '>':
+            if t_stack:     # t_stack에 값이 있으면
+                stack.append(t_stack.pop())     # t_stack의 마지막 값을 빼서 stack에 추가
+
+        elif data[i] == '-':
+            if stack:       # stack에 값이 있으면
+                stack.pop()     # stack의 마지막 값 빼기
+
+        else:       # 문자, 숫자
+            stack.append(data[i])       # stack에 추가
+
+    while t_stack:      # t_stack에 값이 남아있으면
+        stack.append(t_stack.pop())     # 그 값을 stack의 마지막에 추가
+
+    print(''.join(stack))
