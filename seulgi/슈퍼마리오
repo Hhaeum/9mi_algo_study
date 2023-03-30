@@ -1,0 +1,19 @@
+mush = [int(input()) for _ in range(10)]
+
+sum1 = 0    # 버섯의 합 (100 초과 중 가장 가까운 값)
+i = idx = 0
+
+while sum1 < 100 and i < 10:    # 버섯 합이 100이 넘거나, mush 마지막 요소가 되면 break
+    sum1 += mush[i]
+    idx = i
+    i += 1
+
+sum2 = sum1 - mush[idx]     # 버섯의 합 (100 이하 중 가장 가까운 값)
+
+dis1 = abs(100 - sum1)      # 100과의 거리
+dis2 = abs(100 - sum2)
+
+if dis1 <= dis2:    # 거리가 짧은 것을 출력, 같다면 더 큰 값 출력
+    print(sum1)
+else:
+    print(sum2)

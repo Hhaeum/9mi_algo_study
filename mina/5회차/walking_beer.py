@@ -35,4 +35,8 @@ for _ in range(T):
     if visited[-1] == 1: # 목적지에 방문했으면
         print('happy') # happy~
     else: # 아니면
+<<<<<<< HEAD
         print('sad') # sad`~
+=======
+        print('sad') # sad`~
+>>>>>>> f26cc20fd7560fb33dc030e4dc01a531c27583ac

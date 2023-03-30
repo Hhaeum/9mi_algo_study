@@ -1,0 +1,40 @@
+from sys import setrecursionlimit
+setrecursionlimit(10000)
+# 런타임 에러 (RecursionError) 방지를 위해 넣어줌
+
+
+def check(si, sj, h):   # [4방향을 체크 -> 안전한 영역 있으면 다시 4방향 체크] 반복할 함수
+    di = [-1, 1, 0, 0]
+    dj = [0, 0, -1, 1]
+
+    for a in range(4):
+        ni = si + di[a]
+        nj = sj + dj[a]
+
+        if 0 <= ni < N and 0 <= nj < N and data[ni][nj] > h and not visited[ni][nj]:    # 범위가 영역 안이고, 높이가 비의 양보다 크고, 방문하지 않았다면
+            visited[ni][nj] = 1     # 방문 표시
+            check(ni, nj, x)        # 다시 4방향 체크
+
+
+N = int(input())
+data = [list(map(int, input().split())) for _ in range(N)]
+
+mx = max(max(data))     # data 중 가장 높은 값 저장
+
+ans = 0
+
+for x in range(mx):     # x : 비의 양 (0 ~ mx-1 까지의 경우 고려해보기)
+    visited = [[0] * N for _ in range(N)]
+    cnt = 0     # 안전 영역의 개수
+
+    for i in range(N):
+        for j in range(N):
+            if data[i][j] > x and not visited[i][j]:    # 높이 > 비의 양 이고, 방문하지 않았다면
+                cnt += 1    # 안전 영역 + 1
+                visited[i][j] = 1   # 방문 체크
+                check(i, j, x)      # 4방향 체크할 함수 실행
+
+    if cnt > ans:   # 모든 data를 확인한 후에, cnt가 ans보다 크다면
+        ans = cnt   # ans 갱신
+
+print(ans)
