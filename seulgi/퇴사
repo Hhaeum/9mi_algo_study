@@ -1,0 +1,20 @@
+N = int(input())
+
+day = []        # 상담 소요일 저장
+cost = []       # 상담 이익 저장
+money = [0 for _ in range(N+1)]     # i일에서의 최대 수익 계산 -> 저장
+cnt = 0
+
+for _ in range(N):
+    d, c = map(int, input().split())
+    day.append(d)
+    cost.append(c)
+
+for i in range(N):
+    cnt = max(cnt, money[i])
+
+    if i + day[i] > N:      # 상담일 + 소요일이 N보다 크다면
+        continue            # 아무것도 하지않음 (계산 X)
+    money[i+day[i]] = max(cnt+cost[i], money[i+day[i]])     # 최대 수익 = 해당 날짜에 상담을 했을 때, 안했을 때를 비교해서 더 큰 값
+
+print(max(money))
