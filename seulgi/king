@@ -1,0 +1,60 @@
+king, stone, N = input().split()
+N = int(N)
+
+board = [[0] * 8 for _ in range(8)]
+
+move = [input() for _ in range(N)]      # 움직일 방향 저장
+
+alp = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7}
+
+# king 위치, stone 위치
+king_loc = [[8-int(king[1]), alp[king[0]]]]
+stone_loc = [[8-int(stone[1]), alp[stone[0]]]]
+
+# 방향, i/j
+direction = {'T': 0, 'B': 1, 'L': 2, 'R': 3, 'RT': 4, 'RB': 5, 'LB': 6, 'LT': 7}
+di = [-1, 1, 0, 0, -1, 1, 1, -1]
+dj = [0, 0, -1, 1, 1, 1, -1, -1]
+
+# N번 이동, move에 있는 방향으로 이동
+for i in range(N):
+    # 현재 위치 = loc 에 들어있는 마지막 요소
+    king_ci, king_cj = king_loc[-1][0], king_loc[-1][1]
+    stone_ci, stone_cj = stone_loc[-1][0], stone_loc[-1][1]
+
+    # 다음 위치 = 현재 위치 + move의 방향
+    king_ni = king_ci + di[direction[move[i]]]
+    king_nj = king_cj + dj[direction[move[i]]]
+
+    # king의 다음 위치가 범위 안에 있다면 이동
+    if 0 <= king_ni < 8 and 0 <= king_nj < 8:
+        king_loc.append([king_ni, king_nj])
+
+    # stone의 현재 위치와 king의 다음 위치가 같다면
+    if stone_ci == king_ni and stone_cj == king_nj:
+        stone_ni = stone_ci + di[direction[move[i]]]
+        stone_nj = stone_cj + dj[direction[move[i]]]
+
+        # 그리고 stone의 다음 위치가 범위 안에 있다면 이동
+        if 0 <= stone_ni < 8 and 0 <= stone_nj < 8:
+            stone_loc.append([stone_ni, stone_nj])
+
+    # 마지막으로, king의 마지막 위치와 stone의 마지막 위치가 같다면
+    if king_loc[-1] == stone_loc[-1]:
+        king_loc.pop()      # king 이동 X -> king의 마지막 위치를 pop
+
+# 행,열 번호 -> 원래 형태로 돌려받기 : [7, 0] -> A1
+king_ans = []
+stone_ans = []
+
+for key, value in alp.items():
+    if value == king_loc[-1][1]:
+        king_ans.append(key)
+    if value == stone_loc[-1][1]:
+        stone_ans.append(key)
+
+king_ans.append(str(8-king_loc[-1][0]))
+stone_ans.append(str(8-stone_loc[-1][0]))
+
+print(''.join(king_ans))
+print(''.join(stone_ans))

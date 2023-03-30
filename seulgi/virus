@@ -1,0 +1,31 @@
+def bfs(s):
+    global cnt
+    Q.append(s)     # Q에 시작점 추가
+    visited[s] = 1  # 시작점 방문
+
+    while Q:    # Q에 값이 있을동안
+        next = Q.pop()  # Q에 있는 값을 pop해서 검사
+
+        for i in connect[next]:     # next와 연결된 값 하나씩 검사
+            if not visited[i]:      # 만약 i에 방문하지 않았다면
+                Q.append(i)         # Q에 i를 넣어주고
+                visited[i] = 1      # 방문체크
+                cnt += 1            # 바이러스 감염 + 1
+
+
+N = int(input())
+c = int(input())
+
+cnt = 0     # 바이러스 감염된 컴퓨터 수 저장
+connect = [[] for _ in range(N + 1)]    # 연결 정보 저장
+visited = [0] * (N + 1)
+Q = []
+
+for _ in range(c):
+    a, b = map(int, input().split())
+    # 서로의 연결 해주기
+    connect[a].append(b)
+    connect[b].append(a)
+
+bfs(1)      # 시작점을 1로 해서 bfs 돌리기
+print(cnt)  # 감염된 컴퓨터 수 출력
