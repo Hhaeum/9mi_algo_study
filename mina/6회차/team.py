@@ -1,31 +1,49 @@
-import sys
-sys.stdin = open('sample_input (1).txt', 'r')
+# N명 짝수
 
-T = int(input())
+# 1)팀나누기
 
-def parent(x):
-    if x == people[x]:
-        return x
-    else:
-        return parent(people[x])
+def ability(team): # 팀의 강함 측정 ! 
+    total = 0
+    for i in range(N//2):
+        for j in range(N//2):
+            total += synerge[team[i]][team[j]]
+    return total
+
+
+
+def team(s,cnt): # 팀을 나누는 순열을 만들어 줄거임
+    global min_v
+
+
+    ##### 여기 빼면 그냥 순열
+    if cnt == N//2: # 1팀이 다 채워졌다면 ! 
+        team1_score = ability(team1) # 1팀 능력치 구하기
+        n = 0
+        for i in range(N): # 1팀에 들어있는 수를 제외하면 2팀
+            if i not in team1:
+                team2[n] = i
+                n += 1
+        
+        team2_score = ability(team2) # 2팀 능력치도 구해줌
+
+        min_v = min(min_v,abs(team1_score-team2_score))
+        return
+    #####
     
-def union(x,y):
-    rx = parent(x)
-    ry = parent(y)
-    if rx != ry:
-        people[rx] = ry
+    
+    if N - s < N//2 - cnt:
+        return
+    
+    for i in range(s,N):
+        team1[cnt] = i
+        team(i + 1, cnt + 1)
 
-for tc in range(1,T+1):
-    N, M = map(int,input().split())
-    # N명, M장 신청서
-    leader = set()
 
-    paper = list(map(int, input().split()))
-    people = list(range(N+1))
-    for i in range(0, M*2, 2):
-        union(paper[i+1] ,paper[i])
-    # print(people)
-    for j in range(1,N+1):
-        leader.add(parent(j))
+N = int(input())
+synerge = [list(map(int, input().split())) for _ in range(N)]
+team1 = [0]*(N//2)
+team2 = [0]*(N//2)
+min_v = 5000000
+team(0, 0)
 
-    print(f'#{tc} {len(leader)}')
+print(min_v)
