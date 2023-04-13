@@ -1,0 +1,41 @@
+def solve(si, sj):
+    global cnt
+
+    di = [-1, 1, 0, 0]
+    dj = [0, 0, -1, 1]
+
+    visited[si][sj] = 1
+    arr[si][sj] = 0
+
+    for x in range(4):      # 4방향
+        ni = si + di[x]
+        nj = sj + dj[x]
+
+        if 0 <= ni < N and 0 <= nj < N and arr[ni][nj] and not visited[ni][nj]:
+            # ni, nj가 범위 내에 있고 / arr 값이 있고 / 방문하지 않았다면
+            visited[ni][nj] = 1     # 방문 표시
+            arr[ni][nj] = 0         # 값 없애기
+            cnt += 1                # cnt + 1
+            solve(ni, nj)           # ni, nj로 다시 함수 실행
+
+
+N = int(input())
+arr = [list(map(int, input())) for _ in range(N)]
+
+all_cnt = 0     # 총 단지수 저장
+home_cnt = []   # 각 단지내 집의 수 저장
+visited = [[0] * N for _ in range(N)]
+
+for si in range(N):
+    for sj in range(N):
+        if arr[si][sj] and not visited[si][sj]:     # arr 값이 있고, 방문하지 않았으면
+            cnt = 0     # 각 단지내 집의 수 = 0 부터 시작해서 세기
+            solve(si, sj)       # 함수 실행
+            home_cnt.append(cnt+1)      # 시작 집(1) + cnt 값을 append
+            all_cnt += 1        # 총 단지수 + 1
+
+home_cnt.sort()     # 오름차순 정렬
+
+print(all_cnt)
+for h in home_cnt:
+    print(h)
