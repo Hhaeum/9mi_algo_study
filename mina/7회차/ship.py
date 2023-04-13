@@ -1,5 +1,6 @@
-from collections import deque
-
+'''
+그냥 내가 할 수 있는 거 중에 가장 큰거 고르면 됨. 
+'''
 def find_min(M):
     cnt = 0
     used = set()
@@ -24,8 +25,8 @@ crains = list(map(int, input().split()))
 M = int(input())
 boxes = list(map(int, input().split()))
 
-crains.sort(reverse = True)
-boxes.sort(reverse = True)
+crains.sort(reverse = True) # 뒤에서 부터
+boxes.sort(reverse = True) # 뒤에서 부터
 
 if crains[0] < boxes[0]:
     print(-1)
