@@ -1,0 +1,20 @@
+from collections import deque
+
+
+def solve(n):
+    q = deque([n])  # q에 deque한 값
+    while q:
+        x = q.popleft()     # x에 popleft한 값
+        if x == K:          # x가 k라면
+            return visit[x] # visit 값 리턴
+
+        for i in (x-1, x+1, x*2):
+            if 0 <= i < mx and not visit[i]:    # i가 범위 안에 있고, 방문하지 않았다면
+                visit[i] = visit[x] + 1         # 원래 횟수 + 1 해서 저장
+                q.append(i)                     # q에 i를 append
+
+
+N, K = map(int, input().split())
+mx = 100001     # 최대 가능값 + 1
+visit = [0] * mx
+print(solve(N))
