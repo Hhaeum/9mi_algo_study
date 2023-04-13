@@ -1,0 +1,28 @@
+def solve(n):
+    global ans
+    if n == (N//2):         # N//2명이 정해지면
+        cnt1, cnt2 = 0, 0   # 1팀과 2팀의 능력치를 담을 변수에
+        for x in range(N):
+            for y in range(N):
+                if visited[x] and visited[y]:   # x, y에 방문했다면
+                    cnt1 += data[x][y]          # 1팀 : x, y -> cnt1에 더함
+                elif not visited[x] and not visited[y]:    # x, y에 방문하지 않았다면
+                    cnt2 += data[x][y]                     # 2팀 -> x, y가 아닌 다른 값 -> cnt2에 더함
+        ans = min(abs(cnt1-cnt2), ans)          # ans <- cnt1, cnt2의 차와 ans 중 더 작은 값 저장
+        return
+
+    for i in range(n, N):    # n부터 총 인원인 N까지 돌면서
+        if not visited[i]:   # 만약 방문하지 않았다면
+            visited[i] = 1   # 방문 체크
+            solve(n+1)       # n+1로 함수 돌리기
+            visited[i] = 0   # 방문 체크 해제
+
+
+N = int(input())
+
+data = [list(map(int, input().split())) for _ in range(N)]
+ans = 100*100        # 최소값 담을 변수
+visited = [0] * N    # 방문 체크할 list
+
+solve(0)
+print(ans)
