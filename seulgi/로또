@@ -1,0 +1,25 @@
+def lotto(n, ans):      # n : 번호 개수, ans : 번호 담을 임시 list
+    if len(ans) == 6:   # 뽑은 번호가 6개가 되면
+        result.append(ans)  # result에 ans를 더하고, 종료
+        return
+
+    if n < k:   # 번호가 k 미만이면
+        lotto(n+1, ans+[num[n]])    # 포함 o
+        lotto(n+1, ans)             # 포함 x
+
+
+while True:
+    data = list(map(int, input().split()))
+
+    k = data[0]
+    num = data[1:]
+
+    if k == 0:  # input으로 0이 들어오면 break
+        break
+
+    result = []     # 로또 경우의 수 담을 list
+    lotto(0, [])    # 0번부터 고르기 시작
+
+    for lst in result:
+        print(*lst)
+    print()
