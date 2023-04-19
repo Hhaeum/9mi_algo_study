@@ -38,16 +38,12 @@ def perm(cnt, pre, total):
     if check(total, cnt): # 만약 중복되는 수열이 있다면
         return # 리턴한 뒤 그 전 자리수를 바꾸어준다.
     if cnt == N:
-        min_v = int(total)
-        return 
+        print(int(total))
+        exit()
     for i in range(1,4):
-        if i!=pre and min_v == 0: # 바로 직전 수와 겹치지 않고, 들어있는 수가 없으면
+        if i!=pre: # 바로 직전 수와 겹치지 않고, 들어있는 수가 없으면
             perm(cnt+1, i, total+str(i))
 
-
-
 N = int(input())
-min_v = 0
 perm(0,0,'')
-print(min_v)
 
