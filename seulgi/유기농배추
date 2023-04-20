@@ -1,0 +1,45 @@
+def solve(si, sj):
+    stack = [(si, sj)]      # stack에 시작점
+    visited[si][sj] = 1     # 방문 표시
+
+    di = [-1, 1, 0, 0]
+    dj = [0, 0, -1, 1]
+
+    while stack:            # stack에 값이 있는 동안
+        ci, cj = stack[-1]  # 현재 위치 = stack의 마지막 요소
+
+        for x in range(4):  # 4방향 탐색
+            ni = ci + di[x]
+            nj = cj + dj[x]
+
+            if 0 <= ni < N and 0 <= nj < M and arr[ni][nj] and not visited[ni][nj]:
+            # ni, nj가 범위 안에 있고, 배추가 있고, 방문하지 않았다면
+                visited[ni][nj] = 1     # 방문 표시
+                stack.append((ni, nj))  # stack에 추가
+                break
+
+        else:   # 4방향 모두 가지 못한다면
+            stack.pop()     # pop
+
+
+T = int(input())
+
+for tc in range(T):
+    M, N, K = map(int, input().split())
+
+    arr = [[0] * M for _ in range(N)]       # 배추를 저장할 배열
+    visited = [[0] * M for _ in range(N)]   # 방문 표시할 배열
+
+    for _ in range(K):
+        a, b = map(int, input().split())
+        arr[b][a] = 1
+
+    cnt = 0
+
+    for si in range(N):
+        for sj in range(M):
+            if arr[si][sj] and not visited[si][sj]:     # 배추가 있고, 방문하지 않았다면
+                solve(si, sj)   # 함수 실행
+                cnt += 1        # cnt + 1
+
+    print(cnt)
