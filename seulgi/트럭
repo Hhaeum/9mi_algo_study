@@ -1,0 +1,18 @@
+import sys
+
+n, w, L = map(int, input().split())
+kg = list(map(int, input().split()))    # 트럭들의 무게
+bridge = [0] * w    # bridge -> 0 * 다리 길이로 생성
+time = 0    # 정답(시간) 저장할 변수
+
+while bridge:   # bridge에 값이 있을 동안
+    time += 1   # 시간 + 1
+    bridge.pop(0)   # bridge의 첫번째 값을 pop
+
+    if kg:      # 남은 트럭이 있으면
+        if sum(bridge) + kg[0] <= L:    # bridge의 합 + 남은 트럭의 첫 값 <= 최대 무게 이면
+            bridge.append(kg.pop(0))    # bridge에 남은 트럭의 첫 값을 append
+        else:   # 무게 초과이면
+            bridge.append(0)    # bridge에 0을 append
+
+print(time)
