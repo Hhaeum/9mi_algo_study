@@ -1,0 +1,19 @@
+import sys
+
+K, N = map(int, input().split())
+ys = list(int(sys.stdin.readline()) for _ in range(K))
+ans = 0
+
+left, right = 1, max(ys)
+
+while left <= right:    # left, right 가 같아질 때까지 수행
+    mid = (left + right) // 2
+    cnt = sum([y // mid for y in ys])   # 랜선 자른 개수 저장
+
+    if cnt >= N:
+        ans = mid   # ans에 랜선 길이 저장
+        left = mid + 1      # 더 큰 범위 다시 탐색
+    else:
+        right = mid - 1     # 더 작은 범위 다시 탐색
+
+print(ans)
