@@ -1,0 +1,19 @@
+def solve(n):   # n이 소수인지 판단하는 함수
+    if n < 2:   # n이 2보다 작으면
+        return False    # False 반환
+    for j in range(2, int(n**0.5)+1):
+        # 2부터, n의 제곱근 까지 나누어보기
+        # n의 약수 중 가장 작은 값이 n의 제곱근 이하이기 때문에
+        if not n % j:       # 나누어 떨어지면
+            return False    # 소수가 아님 -> False 반환
+    return True             # 무사히 for문이 끝나면 -> True 반환
+
+
+M, N = map(int, input().split())
+
+if M == 1:      # 검사 시작 값이 1이면
+    M += 1      # 2부터 시작하도록 +1 해주기
+
+for i in range(M, N+1):  # M부터 N까지 돌면서
+    if solve(i):         # 소수이면
+        print(i)         # 출력
