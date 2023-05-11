@@ -1,0 +1,13 @@
+T = int(input())
+lst = [int(input()) for _ in range(T)]
+
+for i in range(T):
+    n = lst[i]
+
+    dp = [0]*11     # n은 11 미만 -> 1~10 까지 담을 dp 생성
+    dp[1], dp[2], dp[3] = 1, 2, 4   # 1, 2, 3 의 값을 넣어줌
+
+    for x in range(4, 11):  # 4~10 까지 돌면서 값을 넣어줌
+        dp[x] = dp[x-3] + dp[x-2] + dp[x-1]     # 앞 3개의 값을 더한 값
+
+    print(dp[n])
